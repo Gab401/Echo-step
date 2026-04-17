@@ -369,7 +369,7 @@ class WaveManager:
         x_test, y_test = altitude_masks[self.altitudes[-1]][0]  # Get the coordinates of a pixel with altitude 0 (water)
         if board_game.isWater(x_test, y_test):
             wave_speed_multiplier[self.altitudes[-1]] = WATER_WAVE_SPEED_MULTIPLIER  # Set a specific wave speed multiplier for water
-            print("Water wave speed multiplier set to", WATER_WAVE_SPEED_MULTIPLIER)
+            #print("Water wave speed multiplier set to", WATER_WAVE_SPEED_MULTIPLIER)
 
         # List to store multiple wave simulations, one for each altitude level
         self.waves = [Wave() for _ in range(len(self.altitudes))]  
