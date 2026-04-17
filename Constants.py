@@ -35,7 +35,7 @@ DEFAULT_MAP = "Level1"
 PATH_TO_SOUNDS = "Sounds/v1/"
 
 # Path for the menu
-PATH_TO_MENU = "Images/Menu/test1-Gemini/v2/"
+PATH_TO_MENU = "Images/Menu/test1/v2/"
 PATH_TO_FONTS = "Fonts/"
 
 # Authorized characters in the tile codes
@@ -108,7 +108,7 @@ ORC_SOUND_HUNTING_INTENSITY_THRESHOLD = 0.05 # Threshold of the noise amplitude 
 ORC_SOUND_HUNTING_TIME_DERIVATIVE_THRESHOLD = 0.01 # Threshold of the derivative of the noise amplitude for the orc to start hunting the hero
 ORC_HUNTING_SPEED = 4 # pixels per frame
 ORC_HUNTING_RATIO = 5 # Number of frames for each image when hunting
-ORC_RADIUS_OF_ACTION = 150 # pixels, radius in which the orc can move around its starting position
+ORC_RADIUS_OF_ACTION = 200 # pixels, radius in which the orc can move around its starting position
 ORC_HUNTING_TIME = 30*FPS # frames, time during which the orc hunts the hero after detecting him
 ORC_CATCH_DISTANCE = 30 # pixels, distance at which the orc catches the hero
 ORC_CATCH_RATIO = 5 # Number of frames for each image when catching
