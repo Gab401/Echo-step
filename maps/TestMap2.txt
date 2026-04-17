@@ -1,0 +1,157 @@
+
+#########################################################################
+#                     Altitude transitions and sub-grids
+#########################################################################
+
+# left floor side
+ALT_TRANSITION; T05
+0; 0; 0; 1
+
+# right floor side
+ALT_TRANSITION; T06
+0; 1; 0; 0
+
+# up floor side
+ALT_TRANSITION; T11; T12
+1; 0; 0; 0
+
+# bottom floor side
+ALT_TRANSITION; T13; T14
+0; 0; 1; 0
+
+ALT_SUBGRID; T13; T14
+0; 0; 0; 0
+0; 0; 0; 0
+I; I; I; I  
+I; I; I; I
+
+# Corner top left
+ALT_TRANSITION; T01
+1; 0; 0; 1
+
+# Corner top right
+ALT_TRANSITION; T02
+1; 1; 0; 0
+
+# Corner bottom left
+ALT_TRANSITION; T03
+0; 0; 1; 1
+
+# Corner bottom right
+ALT_TRANSITION; T04
+0; 1; 1; 0
+
+# Big bottom side
+ALT_TRANSITION; T17; T18
+0; 0; 2; 0
+
+ALT_SUBGRID; T17; T18
+I; I; I; I
+I; I; I; I
+I; I; I; I  
+I; I; I; I
+
+##########################################################################
+#                             Behaviour
+##########################################################################
+
+# Water
+BEHAVIOUR; T00; 
+water
+
+
+##########################################################################
+#                                 Rules
+##########################################################################
+
+
+# Random rule for the stone floor
+RULE; R00
+T07; 75
+T08; 20
+T09; 5
+ENDRULE
+
+# Random rule for the bottom side of the stone floor
+RULE; R01
+T13; 65
+T14; 35
+ENDRULE
+
+# Random rule for the up side of the stone floor
+RULE; R02
+T11; 65
+T12; 35
+ENDRULE
+
+# Random rule for the cobblestone
+RULE; R03
+T20; 60
+T21; 20
+T22; 20
+ENDRULE
+
+
+################################################################################
+#               Initial positions of the characters
+################################################################################*
+
+# Main character
+POSITION; MainCharacter
+500; 400
+ENDPOSITION
+
+# Orcs
+POSITION; Orc
+412; 600
+398; 620
+398; 600
+412; 620
+562; 500
+ENDPOSITION
+
+# Water monster
+POSITION; WaterCreature
+984; 760
+ENDPOSITION
+
+# Stars
+POSITION; Star
+100; 100
+924; 412
+100; 412
+924; 100
+ENDPOSITION
+
+
+################################################################################
+#                   Map 32x25 - 3 Plateformes & 2 Passerelles
+################################################################################
+
+MAP
+T00; T00; T00; T00; T00; T00; T00; T00; T00; T00; T00; T00; T00; T00; T00; T00; T00; T00; T00; T00; T00; T00; T00; T00; T00; T00; T00; T00; T00; T00; T00; T00; ENDLINE
+T00; T01; R02; R02; R02; R02; R02; R02; R02; T02; T00; T00; T00; T00; T00; T00; T00; T00; T00; T00; T00; T00; T00; T00; T00; T00; T00; T00; T00; T00; T00; T00; ENDLINE
+T00; T05; R00; R00; R00; R00; R00; R00; R00; R00; R02; R02; R02; R02; R02; R02; R02; R02; R02; R02; R02; R02; T02; T00; T00; T00; T00; T00; T00; T00; T00; T00; ENDLINE
+T00; T05; R00; R00; R00; R00; R00; R00; R00; T15; R01; T16; R00; R00; R00; R00; R00; R00; R00; R00; R00; R00; T06; T00; T00; T00; T00; T00; T00; T00; T00; T00; ENDLINE
+T00; T05; R00; R00; T01; R02; R02; R02; T02; T06; T00; T05; R00; R00; T01; R02; R02; R02; R02; T02; R00; R00; T06; T00; T00; T00; T00; T00; T00; T00; T00; T00; ENDLINE
+T00; T05; R00; R00; T05; R03; R03; R03; T06; T06; T00; T05; R00; R00; T05; R03; R03; R03; R03; T06; R00; R00; T06; T00; T00; T00; T00; T00; T00; T00; T00; T00; ENDLINE
+T00; T05; R00; R00; T05; R03; R03; R03; T06; T06; T00; T05; R00; R00; T03; R01; R01; R01; R01; T04; R00; R00; T06; T00; T00; T00; T00; T00; T00; T00; T00; T00; ENDLINE
+T00; T05; R00; R00; T03; R01; R01; R01; T04; T06; T00; T05; R00; R00; R00; R00; R00; R00; R00; R00; T15; R01; T04; T00; T00; T00; T00; T00; T00; T00; T00; T00; ENDLINE
+T00; T05; R00; R00; R00; R00; R00; R00; R00; T06; T00; T03; T16; R03; R03; T15; R01; R01; T16; T15; T04; T00; T00; T00; T00; T00; T00; T00; T00; T00; T00; T00; ENDLINE
+T00; T05; R00; R00; R00; R00; R00; R00; R00; T06; T00; T00; T05; R03; R03; T06; T00; T00; T05; T06; T00; T00; T00; T00; T00; T00; T00; T00; T00; T00; T00; T00; ENDLINE
+T00; T03; R01; R01; R01; R01; R01; R01; R01; T04; T00; T00; T05; R03; R03; T06; T00; T00; T05; T06; T00; T00; T00; T00; T00; T00; T00; T00; T00; T00; T00; T00; ENDLINE
+T00; T00; T00; T00; T00; T00; T00; T00; T00; T00; T00; T00; T05; R03; R03; T06; T00; T00; T05; T06; T00; T00; T00; T00; T00; T00; T00; T00; T00; T00; T00; T00; ENDLINE
+T00; T00; T00; T00; T00; T00; T00; T00; T00; T00; T00; T00; T05; R03; R03; T06; T00; T00; T05; T06; T00; T00; T00; T00; T00; T00; T00; T00; T00; T00; T00; T00; ENDLINE
+T00; T00; T00; T00; T01; R02; R02; R02; R02; R02; R02; R02; R00; R03; R03; R00; R02; R02; R00; R00; R02; R02; R02; R02; R02; R02; R02; R02; T02; T00; T00; T00; ENDLINE
+T00; T00; T00; T00; T05; R00; R00; R00; R00; R00; R00; R00; R00; R00; R00; R00; R00; R00; R00; R00; R00; R00; R00; R00; R00; R00; R00; R00; T06; T00; T00; T00; ENDLINE
+T00; T00; T00; T00; T05; R00; R00; R00; R00; R00; R00; R00; R00; R00; R00; R00; R00; R00; R00; R00; R00; R00; R00; R00; R00; R00; R00; R00; T06; T00; T00; T00; ENDLINE
+T00; T00; T00; T00; T05; R00; R00; T01; R02; R02; R02; R02; R02; T02; R00; R00; R00; R00; R00; R00; T01; R02; R02; R02; R02; T02; R00; R00; T06; T00; T00; T00; ENDLINE
+T00; T00; T00; T00; T05; R00; R00; T05; R03; R03; R03; R03; R03; T06; R00; R00; R00; R00; R00; R00; T05; R03; R03; R03; R03; T06; R00; R00; T06; T00; T00; T00; ENDLINE
+T00; T00; T00; T00; T05; R00; R00; T05; R03; R03; R03; R03; R03; T06; R00; R00; R00; R00; R00; R00; T05; R03; R03; R03; R03; T06; R00; R00; T06; T00; T00; T00; ENDLINE
+T00; T00; T00; T00; T05; R00; R00; T05; R03; R03; R03; R03; R03; T06; R00; R00; R00; R00; R00; R00; T03; R01; R01; R01; R01; T04; R00; R00; T06; T00; T00; T00; ENDLINE
+T00; T00; T00; T00; T05; R00; R00; T05; R03; R03; R03; R03; R03; T06; R00; R00; R00; R00; R00; R00; R00; R00; R00; R00; R00; R00; R00; R00; T06; T00; T00; T00; ENDLINE
+T00; T00; T00; T00; T05; R00; R00; T03; R01; R01; R01; R01; R01; T04; R00; R00; R00; R00; R00; R00; R00; R00; R00; R00; R00; R00; R00; R00; T06; T00; T00; T00; ENDLINE
+T00; T00; T00; T00; T03; R01; R01; R01; R01; R01; R01; R01; R01; R01; R01; R01; R01; R01; R01; R01; R01; R01; R01; R01; R01; R01; R01; R01; T04; T00; T00; T00; ENDLINE
+T00; T00; T00; T00; T00; T00; T00; T00; T00; T00; T00; T00; T00; T00; T00; T00; T00; T00; T00; T00; T00; T00; T00; T00; T00; T00; T00; T00; T00; T00; T00; T00; ENDLINE
+T00; T00; T00; T00; T00; T00; T00; T00; T00; T00; T00; T00; T00; T00; T00; T00; T00; T00; T00; T00; T00; T00; T00; T00; T00; T00; T00; T00; T00; T00; T00; T00; ENDLINE
+ENDMAP

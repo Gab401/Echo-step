@@ -1,0 +1,63 @@
+###############################################################
+#              TEST MAP - STRUCTURE OF THE MAP FILES
+###############################################################
+
+# STRUCTURE: alway respect the order of the different steps
+#       1. The '#' caractere is for the comments, it can only used at the beginning of a line
+#       2. Declaration of the rules (optionnal)
+#           - Declaration begins with the code RULE; AXY with A the type of rule and XY the identifier of the rule
+#           - Declaration end with the code ENDRULE
+#           a. If A=R : random mode
+#               - structure of the rule :
+#                   RULE; R00
+#                   TAB; n1
+#                   TCD; n2
+#                   TEF; n3
+#                   ...
+#                   ENDRULE
+#               Where
+#                   TAB, TDC, ... : tile codes
+#                   n1, n2, ... : integer between 1 and 99 representing the percentage associated to the tile, the sum must be 100
+#       3. Declaration of the map 
+#           - Declaration begins with the line MAP
+#           - Then, the first line corresponds to the top line, the first caractere of each line corresponds to the left tile
+#           - A tile is represented with its code, tiles are separated with one space ';'
+#           - A line ends with the code ENDLINE
+#           - Declaration ends with line ENDMAP
+#           - Uncomplete lines are filled with black tiles (code 00)
+#       4. Tile code
+#           a. TXY : with X and Y in the DIGITS constant (Constants.py)
+#               The correspondance between codes and tiles is done by scanning the image folder.
+#               If a file name contains the string 'TXX' (T for tile and XY the number of the tile) we consider it is the tile we are looking for
+#               => We set DIGITS = "0123456789ABCDEF" so the code will be in hexadecimale (to have more space)
+#           b. RXY : with XY the identifier of a rule
+
+
+# Random rule for the water boundary
+RULE; R00
+T10; 75
+T11; 15
+T12; 10
+ENDRULE
+
+
+# Map de test avec les tuiles du dossier v0 - a la main
+
+MAP
+T00; ENDLINE
+T00; T00; T01; T01; T01; T01; T01; T01; T01; T01; T01; T01; T01; T01; T01; T01; T01; ENDLINE
+T00; T00; T01; T01; T01; T01; T01; T01; T01; T01; T01; T01; T01; T01; T01; T01; T01; ENDLINE
+T00; T00; T01; T01; T01; T01; T01; T01; T01; T01; T01; T01; T01; T01; T01; T01; T01; ENDLINE
+T00; T00; T01; T01; T01; T01; T01; T01; T01; T01; T01; T01; T01; T01; T01; T01; T01; ENDLINE
+T00; T00; T21; T21; T21; T21; T21; T21; T21; T21; T21; T21; T21; T21; T21; T21; T21; ENDLINE
+T00; T00; R00; R00; R00; R00; R00; R00; R00; R00; R00; R00; R00; R00; R00; R00; R00; ENDLINE
+T00; T00; R00; R00; R00; R00; R00; R00; R00; R00; R00; R00; R00; R00; R00; R00; R00; ENDLINE
+T00; T00; R00; R00; R00; R00; R00; R00; R00; R00; R00; R00; R00; R00; R00; R00; R00; ENDLINE
+T00; T00; R00; R00; R00; R00; R00; R00; R00; R00; R00; R00; R00; R00; R00; R00; R00; ENDLINE
+T00; T00; R00; R00; R00; R00; R00; R00; R00; R00; R00; R00; R00; R00; R00; R00; R00; ENDLINE
+T00; T00; R00; R00; R00; R00; R00; R00; R00; R00; R00; R00; R00; R00; R00; R00; R00; ENDLINE
+T00; T00; R00; R00; R00; R00; R00; R00; R00; R00; R00; R00; R00; R00; R00; R00; R00; ENDLINE
+T00; T00; R00; R00; R00; R00; R00; R00; R00; R00; R00; R00; R00; R00; R00; R00; R00; ENDLINE
+T00; T00; R00; R00; R00; R00; R00; R00; R00; R00; R00; R00; R00; R00; R00; R00; R00; ENDLINE
+T00; T00; R00; R00; R00; R00; R00; R00; R00; R00; R00; R00; R00; R00; R00; R00; R00; ENDLINE
+ENDMAP

@@ -1,0 +1,4 @@
+https://liberatedpixelcup.github.io/Universal-LPC-Spritesheet-Character-Generator/#sex=male&body=Body_Color_light&shadow=Shadow_shadow&ears=Long_ears_light&head=Human_Male_Small_light&cape=Solid_forest&legs=Leggings_2_charcoal&hat_trim=Wizard_Hat_Belt_base_brown&clothes=Longsleeve_charcoal&shoes=Basic_Boots_charcoal&hat=Wizard_Hat_Base_green&eye_color=Eye_Color_blue
+
+
+Shadows removed with the C:\A\A_Chula\E_Programmation Methodology\Echo-step\traitement_image\clean_shadows.py script

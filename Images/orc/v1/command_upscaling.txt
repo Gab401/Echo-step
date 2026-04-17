@@ -1,0 +1,1 @@
+magick mogrify -filter point -resize 150% *.png

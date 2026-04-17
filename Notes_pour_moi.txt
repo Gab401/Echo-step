@@ -1,0 +1,6 @@
+Ordre de dessin des objets:
+    - Boardgame
+    - Objets flottants (perso + trucs divers):
+        faire une fonction spécifique qui les dessine en partant du haut de l'écran puis va vers le bas
+    - Wave
+    - Infos diverses à destination du joueur

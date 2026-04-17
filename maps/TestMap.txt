@@ -1,0 +1,221 @@
+###############################################################
+#              TEST MAP - STRUCTURE OF THE MAP FILES
+###############################################################
+
+# STRUCTURE: alway respect the order of the different steps
+#       1. The '#' caractere is for the comments, it can only used at the beginning of a line
+#
+#       2. Declaration of the altitude transition matrix of a tile (optionnal)
+#           - Declaration begins with the code ALT_TRANSITION; TAB; TCD; ... where TAB, TCD, etc. are the tile codes.
+#           - Then, we have one line of 4 values representing the altitude difference when entering the tile from a specific direction.
+#           - The order is: North; East; South; West.
+#           - Values can be integers (0, 1, -1, ...) or 'I' for Infinity (blocked/impassable).
+#           - By default, if a tile is not specified, it has no altitude transition (0; 0; 0; 0).
+#           - We assume that the tile in position (0, 0) has an altitude of 0
+#           - Example:
+#                   ALT_TRANSITION; T01; T02
+#                   1; I; 0; 0
+#
+#       3. Declaration of the altitude sub-grid of a tile (optionnal)
+#           - Declaration begins with the code ALT_SUBGRID; TAB; TCD; ... where TAB, TCD, etc. are the tile codes.
+#           - Then, we have 4 lines of 4 values representing the relative altitude inside the tile.
+#           - Each number corresponds to a block of 8x8 pixels (assuming a tile is a square of 32x32 pixels).
+#           - Values: 'I' = Infinity (blocked), 0 = base altitude, 1 = one step higher, etc.
+#           - By default, if a tile is not specified, its sub-grid is completely flat at the base altitude (all 0s).
+#           - Example:
+#                   ALT_SUBGRID; T01; T02
+#                   0; 0; 0; 0
+#                   1; 1; 1; 1
+#                   1; 1; 1; 1
+#                   I; I; I; I
+#
+#       4. Specific behaviour  (optionnal): some specific information can be associated to the dedicated field "behaviour " of the Tile object (exemple: water)
+#           - Declaration is as follow 
+#                   BEHAVIOUR; TAB; TCD; ...; 
+#                   word
+#           Where TAB, TCD, ... are tile codes and word the value of the field
+#
+#       5. Declaration of the rules (optionnal)
+#           - Declaration begins with the code RULE; AXY with A the type of rule and XY the identifier of the rule
+#           - Declaration end with the code ENDRULE
+#           a. If A=R : random mode
+#               - structure of the rule :
+#                   RULE; R00
+#                   TAB; n1
+#                   TCD; n2
+#                   TEF; n3
+#                   ...
+#                   ENDRULE
+#               Where
+#                   TAB, TDC, ... : tile codes
+#                   n1, n2, ... : integer between 1 and 99 representing the percentage associated to the tile, the sum must be 100
+#
+#       6. Declaration of the position of the main character and ennemies
+#           - Declaraction begins with the line POSITION; name
+#               Where name is the name of the creature object
+#           - Then each line correspond of the initial position of one instantiation of the class (only one instantion if it is the main character)
+#           - Declaration ends with the code ENDPOSITION
+#           - exemple
+#                   POSITION; Orc
+#                   X1, Y1
+#                   X2, Y2
+#                   ENDPOSITION
+#
+#       7. Declaration of the map 
+#           - Declaration begins with the line MAP
+#           - Then, the first line corresponds to the top line, the first caractere of each line corresponds to the left tile
+#           - A tile is represented with its code, tiles are separated with one space ';'
+#           - A line ends with the code ENDLINE
+#           - Declaration ends with line ENDMAP
+#           - Uncomplete lines are filled with black tiles (code 00)
+#
+#         Tile codes:
+#           a. TXY : with X and Y in the DIGITS constant (Constants.py)
+#               The correspondance between codes and tiles is done by scanning the image folder.
+#               If a file name contains the string 'TXX' (T for tile and XY the number of the tile) we consider it is the tile we are looking for
+#               => We set DIGITS = "0123456789ABCDEF" so the code will be in hexadecimale (to have more space)
+#           b. RXY : with XY the identifier of a rule
+
+
+
+
+#########################################################################
+#                     Altitude transitions and sub-grids
+#########################################################################
+
+# left floor side
+ALT_TRANSITION; T05
+0; 0; 0; 1
+
+# right floor side
+ALT_TRANSITION; T06
+0; 1; 0; 0
+
+# up floor side
+ALT_TRANSITION; T11; T12
+1; 0; 0; 0
+
+# bottom floor side
+ALT_TRANSITION; T13; T14
+0; 0; 1; 0
+
+ALT_SUBGRID; T13; T14
+0; 0; 0; 0
+0; 0; 0; 0
+I; I; I; I  
+I; I; I; I
+
+# Corner top left
+ALT_TRANSITION; T01
+1; 0; 0; 1
+
+# Corner top right
+ALT_TRANSITION; T02
+1; 1; 0; 0
+
+# Corner bottom left
+ALT_TRANSITION; T03
+0; 0; 1; 1
+
+# Corner bottom right
+ALT_TRANSITION; T04
+0; 1; 1; 0
+
+# Big bottom side
+ALT_TRANSITION; T17; T18
+0; 0; 2; 0
+
+ALT_SUBGRID; T17; T18
+I; I; I; I
+I; I; I; I
+I; I; I; I  
+I; I; I; I
+
+##########################################################################
+#                             Behaviour
+##########################################################################
+
+# Water
+BEHAVIOUR; T00; 
+water
+
+
+##########################################################################
+#                                 Rules
+##########################################################################
+
+
+# Random rule for the stone floor
+RULE; R00
+T07; 75
+T08; 20
+T09; 5
+ENDRULE
+
+# Random rule for the bottom side of the stone floor
+RULE; R01
+T13; 65
+T14; 35
+ENDRULE
+
+# Random rule for the up side of the stone floor
+RULE; R02
+T11; 65
+T12; 35
+ENDRULE
+
+# Random rule for the cobblestone
+RULE; R03
+T20; 60
+T21; 20
+T22; 20
+ENDRULE
+
+
+################################################################################
+#               Initial positions of the characters
+################################################################################*
+
+# Main character
+POSITION; MainCharacter
+0; 0
+ENDPOSITION
+
+# Orcs
+POSITION; Orc
+412; 600
+398; 620
+398; 600
+412; 620
+562; 500
+ENDPOSITION
+
+# Water monster
+POSITION; WaterCreature
+984; 760
+ENDPOSITION
+
+
+
+################################################################################
+#                   Map de test avec les tuiles du dossier v1
+################################################################################
+
+MAP
+T00; ENDLINE
+T00; ENDLINE
+T00; T00; T00; T00; T00; T00; T00; T00; T05; R00; T06; ENDLINE
+T00; T00; T00; T00; T00; T00; T00; T00; T05; R00; T06; ENDLINE
+T00; T00; T00; T00; T00; T00; T00; T00; T05; R00; T06; ENDLINE
+T00; T00; T00; T00; T00; T00; T00; T00; T05; R00; T06; ENDLINE
+T00; T00; T00; T00; T00; T00; T00; T00; T05; R00; T06; ENDLINE
+T00; T00; T01; R02; R02; R02; R02; R02; R00; R00; R00; R02; R02; R02; R02; R02; R02; R02; T02; ENDLINE
+T00; T00; T05; R00; T15; R01; R01; T16; R00; R00; R00; R00; R00; R00; R00; R00; R00; R00; T06; ENDLINE
+T00; T00; T05; R00; T06; T00; T00; T05; R00; R00; R00; R00; R00; R00; R00; R00; R00; R00; T06; ENDLINE
+T00; T00; T05; R00; R00; T02; T00; T05; R00; R00; R00; R00; R03; R03; R03; R03; R03; R00; T06; ENDLINE
+T00; T00; T05; R00; R00; T01; R02; R02; T02; R03; R03; R03; R03; R03; R03; R03; R03; R00; T06; ENDLINE
+T00; T00; T05; R00; R00; T03; R01; R01; T04; R03; R03; R03; R03; R03; R03; R00; R03; R00; T06; ENDLINE
+T00; T00; T05; R00; R00; R00; R00; R00; R00; R03; R00; R00; R00; R00; R00; R00; R00; R00; T06; ENDLINE
+T00; T00; T03; R01; R01; R01; R01; R01; T16; R03; T15; R01; R01; R01; R01; R01; R01; R01; T04; ENDLINE
+T00; T00; T00; T00; T00; T00; T00; T00; T05; R03; T06; ENDLINE
+ENDMAP
