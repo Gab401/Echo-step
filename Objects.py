@@ -74,6 +74,8 @@ class Star(Object):
         Star.stars_list.append(self.name)
         self.debug = debug
 
+        self.sound_collect = pygame.mixer.Sound(PATH_TO_SOUNDS + "star_collect.ogg")
+
 
     def clear():
         Star.stars_list = []
@@ -105,6 +107,7 @@ class Star(Object):
         if event == "collected":
             Star.stars_list.remove(self.name)
             self.image = pygame.image.load(PATH_TO_EMPTY_STAR_IMAGE).convert_alpha() # Replace with collected star image
+            self.sound_collect.play()
 
 
 

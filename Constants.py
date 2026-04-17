@@ -74,7 +74,7 @@ HERO_JUMP_SPEED = 0.3 # step per frame (one step corresponds to an half tile)
 HERO_WALK_SPEED = 1 # pixels per frame
 HERO_RUN_SPEED = 3 # pixels per frame
 HERO_SWIM_SPEED = 2 # pixels per frame
-HERO_WALK_RATIO = 5 # Number of frames for each image when walking
+HERO_WALK_RATIO = 10 # Number of frames for each image when walking
 HERO_RUN_RATIO = 2 # Number of frames for each image when running
 HERO_SWIM_RATIO = 5 # Number of frames for each image when swimming
 HERO_WALK_NOISE_AMPLITUDE = 0.5 # Amplitude of the noise added to the wave when the hero walks
@@ -83,10 +83,14 @@ HERO_SWIM_NOISE_AMPLITUDE = 0.5 # Amplitude of the noise added to the wave when 
 HERO_JUMP_NOISE_AMPLITUDE = 1.5 # Amplitude of the noise added to the wave when the hero jumps
 HERO_WISTLE_NOISE_AMPLITUDE = 2 # Amplitude of the noise added to the wave when the hero whistles
 
-HERO_SF_RUN = 1.5 # Sound factor for running (multiplier for the noise amplitude when the hero runs)
-HERO_FREQ_RUN = 0.25 # Time between two noise peaks when the hero runs (in seconds)
-HERO_SF_WALK = 0.75 # Sound factor for walking (multiplier for the noise amplitude when the hero walks)
-HERO_FREQ_WALK = 0.5 # Time between two noise peaks when the hero
+HERO_VOLUME_RUN = 0.2 # Sound factor for running 
+HERO_FREQ_RUN = 10 # Time between two noise peaks when the hero runs (in frames)
+HERO_VOLUME_WALK = 0.1 # Sound factor for walking 
+HERO_FREQ_WALK = 18 # Time between two noise peaks when the hero walks (in frames)
+HERO_VOLUME_SWIM = 0.1 # Sound factor for swimming 
+HERO_FREQ_SWIM = 20 # Time between two noise peaks when the hero swims (in frames)
+HERO_WHISTLE_VOLUME = 0.3 # Sound factor for whistling 
+HERO_WISTHLE_EXTINCTION_TIME = 1300 # Time in milliseconds for the whistle sound to fade out after the hero stops whistling
 
 # Constants for the orc
 ORC_PATH_TO_IMAGES = "Images/orc/v1.2_(x1.5)/"
@@ -109,6 +113,10 @@ ORC_HUNTING_TIME = 30*FPS # frames, time during which the orc hunts the hero aft
 ORC_CATCH_DISTANCE = 30 # pixels, distance at which the orc catches the hero
 ORC_CATCH_RATIO = 5 # Number of frames for each image when catching
 
+ORC_VOLUME_HUNTING = 0.1 # Sound factor for the orc hunting
+ORC_FREQ_HUNTING = 150 # Time between two noise peaks when the orc is hunting (in frames)
+ORC_VOLUME_LAUGHING = 0.2 # Sound factor for the orc laughing
+
 
 # Constants for the water creature
 WATER_CREATURE_PATH_TO_IMAGES = "Images/water_monster/v0.1_(x1.5)/"
@@ -129,6 +137,8 @@ WATER_CREATURE_MAX_HUNTING_TIME = 30*FPS # frames, time during which the water c
 WATER_CREATURE_CATCH_DISTANCE = 30 # pixels, distance at which the water creature catches the hero
 WATER_CREATURE_CATCH_RATIO = 4 # Number of frames for each image when catching
 WATER_CREATURE_CATCH_SPEED = HERO_SWIM_SPEED
+
+WATER_CREATURE_ATTACK_VOLUME = 0.5 # Sound factor for the water creature attack
 
 
 

@@ -381,33 +381,41 @@ class MainCharacter(Creature):
         # Sounds
         self.sounds = {}
         self.sounds["step"] = pygame.mixer.Sound(PATH_TO_SOUNDS + "step.ogg")
+        self.sounds["water_step"] = pygame.mixer.Sound(PATH_TO_SOUNDS + "water_step.ogg")
+        self.sounds["whistle"] = pygame.mixer.Sound(PATH_TO_SOUNDS + "whistle.ogg")
+        self.sounds["whistle"].set_volume(HERO_WHISTLE_VOLUME)
+        self.sounds["jump"] = pygame.mixer.Sound(PATH_TO_SOUNDS + "jump.ogg")
+        self.sound_to_play = None
+        self.sound_to_play_freq = 0
+        self.sound_to_play_volume = 0
+        self.is_whistling = False
  
     
     def update(self, keys, frame_count):
 
-        last_x, last_y = self.x, self.y
-        last_altitude = self.BoardGame.getMacroAltitude(last_x, last_y)
-            
         noise_value = 0
 
-        if keys[pygame.K_LSHIFT] or keys[pygame.K_RSHIFT] or self.BoardGame.isWater(self.x, self.y):
-            self._walk(HERO_SWIM_SPEED)
+        if self.BoardGame.isWater(self.x, self.y):
+            self._swim(HERO_SWIM_SPEED)
             self.drawing_ratio = HERO_SWIM_RATIO
+        elif keys[pygame.K_LSHIFT] or keys[pygame.K_RSHIFT]:
+            self._walk(HERO_WALK_SPEED)
+            self.drawing_ratio = HERO_WALK_RATIO
         else:
             self._walk(HERO_RUN_SPEED)
-            self.drawing_ratio = HERO_WALK_RATIO
+            self.drawing_ratio = HERO_RUN_RATIO
 
         if keys[pygame.K_UP]:
-            self._move("up", self.speed)
+            self._move("up", frame_count)
             noise_value += HERO_WALK_NOISE_AMPLITUDE if self.speed == HERO_WALK_SPEED else HERO_RUN_NOISE_AMPLITUDE
         elif keys[pygame.K_DOWN]:
-            self._move("down", self.speed)
+            self._move("down", frame_count)
             noise_value += HERO_WALK_NOISE_AMPLITUDE if self.speed == HERO_WALK_SPEED else HERO_RUN_NOISE_AMPLITUDE
         elif keys[pygame.K_LEFT]:
-            self._move("left", self.speed)
+            self._move("left", frame_count)
             noise_value += HERO_WALK_NOISE_AMPLITUDE if self.speed == HERO_WALK_SPEED else HERO_RUN_NOISE_AMPLITUDE
         elif keys[pygame.K_RIGHT]:
-            self._move("right", self.speed)
+            self._move("right", frame_count)
             noise_value += HERO_WALK_NOISE_AMPLITUDE if self.speed == HERO_WALK_SPEED else HERO_RUN_NOISE_AMPLITUDE
         else:
             self._stop()
@@ -421,6 +429,14 @@ class MainCharacter(Creature):
 
         if keys[pygame.K_SPACE]:
             noise_value += HERO_WISTLE_NOISE_AMPLITUDE
+
+            if not self.is_whistling:
+                # loops=-1 dit à Pygame de jouer le son en boucle à l'infini
+                self.sounds["whistle"].play(loops=-1) 
+                self.is_whistling = True
+        else:
+            self.sounds["whistle"].fadeout(HERO_WISTHLE_EXTINCTION_TIME)     
+            self.is_whistling = False
 
         # Debug
         if keys[pygame.K_1]:
@@ -439,7 +455,7 @@ class MainCharacter(Creature):
         if self.Wave is not None:
             source_x = self.x
             source_y = self.y - self.HEIGHT // 2
-            self.Wave.setLightAreaPosition(self.name + "Light", source_x-self.SIZE_LIGHT_AREA//2, source_y-self.SIZE_LIGHT_AREA//2)
+            self.Wave.setLightAreaPosition(self.name + "Light", source_x-self.SIZE_LIGHT_AREA//2, source_y-self.SIZE_LIGHT_AREA//2)        
 
         # Check the star position and update the number of stars collected
         for star_name in Star.stars_list:
@@ -450,6 +466,44 @@ class MainCharacter(Creature):
 
                 if self.nb_stars_collected == self.nb_stars_total:
                     self.Bridge.gameOver({"total_nb_stars": self.nb_stars_total, "collected_nb_stars": self.nb_stars_collected, "final_state": "win"})
+
+
+    def _move(self, direction, frame_count):
+        """
+            Move the main character in the given direction with the given speed if it is possible
+            Play the right sound according to the type of movement (walking, running or swimming)
+        """
+        # Play the appropriate sound based on the movement type
+        if self.sound_to_play is not None and frame_count % self.sound_to_play_freq == 0:
+            sound = self.sounds[self.sound_to_play]
+            sound.set_volume(self.sound_to_play_volume)
+            sound.play()
+
+        return super()._move(direction, self.speed)
+    
+
+    def _walk(self, speed):
+        super()._walk(speed)
+        if speed == HERO_WALK_SPEED:
+            self.sound_to_play = "step"
+            self.sound_to_play_freq = HERO_FREQ_WALK
+            self.sound_to_play_volume = HERO_VOLUME_WALK
+        elif speed == HERO_RUN_SPEED:
+            self.sound_to_play = "step"
+            self.sound_to_play_freq = HERO_FREQ_RUN
+            self.sound_to_play_volume = HERO_VOLUME_RUN
+
+    
+    def _swim(self, speed=HERO_SWIM_SPEED):
+        super()._walk(speed)
+        self.sound_to_play = "water_step"
+        self.sound_to_play_freq = HERO_FREQ_SWIM
+        self.sound_to_play_volume = HERO_VOLUME_SWIM
+
+
+    def _jump(self, value=HERO_JUMP_SPEED):
+        super()._jump(value)
+        self.sounds["jump"].play()
 
 
     def receiveEvent(self, event, sender_name=None):
@@ -526,6 +580,14 @@ class Orc(Creature):
             wave.addGaussianLightArea(self.SIZE_LIGHT_AREA, a, sigma, self.name + "Light")
             wave.setLightAreaPosition(self.name + "Light", None, None) 
 
+        # Sounds
+        self.sounds = {}
+        self.sounds["attack"] = pygame.mixer.Sound(PATH_TO_SOUNDS + "orc_attack.ogg")
+        self.sounds["hunting"] = pygame.mixer.Sound(PATH_TO_SOUNDS + "orc_hunting.ogg")
+        self.sounds["hunting"].set_volume(ORC_VOLUME_HUNTING)
+        self.sounds["laugh"] = pygame.mixer.Sound(PATH_TO_SOUNDS + "orc_laughing.ogg")
+        self.sounds["laugh"].set_volume(ORC_VOLUME_LAUGHING)
+
 
     def _move(self, direction, speed):
         
@@ -550,6 +612,11 @@ class Orc(Creature):
         if result:
             self.last_direction = direction
         return result
+
+
+    def _attack(self):
+        super()._attack()
+        self.sounds["attack"].play()
 
 
     def ManhattanDistanceToStart(self, x, y):
@@ -710,6 +777,10 @@ class Orc(Creature):
                 self.image_number = 0
                 self.drawing_ratio = ORC_CATCH_RATIO
 
+            # Play sound of hunting
+            if frame_count % ORC_FREQ_HUNTING == 0:
+                self.sounds["hunting"].play()
+
         elif self.FSM_state == "catch":
 
             if frame_count - self.start_time_catch == ORC_CATCH_RATIO*3: 
@@ -721,6 +792,7 @@ class Orc(Creature):
             if frame_count - self.start_time_catch > ORC_CATCH_RATIO*6: # Stay in catch state for 1 second
                 self.FSM_state = "flee"
                 self._walk()
+                self.sounds["laugh"].play()
 
             if self.Wave is not None:
                 source_x = self.x
@@ -804,7 +876,16 @@ class WaterCreature(Creature):
             self.SIZE_LIGHT_AREA, a, sigma = WATER_CREATURE_GAUSSIAN_LIGHT_AREA_PARAMETERS
             wave.addGaussianLightArea(self.SIZE_LIGHT_AREA, a, sigma, self.name + "Light")
             wave.setLightAreaPosition(self.name + "Light", None, None)
+
+        self.sounds = {}
+        self.sounds["attack"] = pygame.mixer.Sound(PATH_TO_SOUNDS + "water_monster_attack.ogg")
+        self.sounds["attack"].set_volume(WATER_CREATURE_ATTACK_VOLUME)
     
+
+    def _attack(self):
+        super()._attack()
+        self.sounds["attack"].play()
+
 
     def _appear(self):
         # Make the creature appear
