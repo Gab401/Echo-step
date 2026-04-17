@@ -4,3 +4,6 @@ Ordre de dessin des objets:
         faire une fonction spécifique qui les dessine en partant du haut de l'écran puis va vers le bas
     - Wave
     - Infos diverses à destination du joueur
+
+
+Jeu de Web, à commenter : https://github.com/dhamwarich/progmeth_pygame
